@@ -1,0 +1,29 @@
+composer create-project laravel/laravel proapp
+composer require filament/filament:"^4.0"
+php artisan filament:install --panels
+
+------------------------------------------------------------
+
++ File konfigurasi config/filament.php atau config/filament/
++ Provider App\Providers\Filament\AdminPanelProvider.php
++ Route untuk /admin
+
+php artisan migrate
+php artisan tinker
+
+------------------------------------------------------------
+Tinker
+\App\Models\User::create([
+    'name' => 'Admin',
+    'email' => 'admin@example.com',
+    'password' => bcrypt('password'),
+]);
+
+exit
+------------------------------------------------------------
+
+Jalankan php artisan serve
+	
+------------------------------------------------------------
+
+
