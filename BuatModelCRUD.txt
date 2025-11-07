@@ -1,0 +1,67 @@
+2. Buat Model + Factory (opsional untuk seed)
+php artisan make:model Product -mf
+
+// app/models/Product.php
+protected $fillable = [
+        'kodebarang',
+        'namabarang',
+        'harga',
+    ];
+
+protected $casts = [
+        'harga' => 'decimal:2',
+    ];
+
+// Pastikan kodebarang tersimpan UPPERCASE & rapi
+public function setKodebarangAttribute($value): void
+{
+    $this->attributes['kodebarang'] = strtoupper(trim($value));
+}
+
+
+
+
+// database/migrations/xxxx_xx_xx_xxxxxx_create_products_table.php
+public function up(): void
+{
+    Schema::create('products', function (Blueprint $table) {
+        $table->id();
+        $table->string('kodebarang', 30)->unique(); // unik
+        $table->string('namabarang', 150);
+        $table->decimal('harga', 15, 2)->default(0);
+        $table->timestamps();
+    });
+}
+
+php artisan migrate
+
+
+php artisan make:filament-resource Product --generate
+
+
+
+// database/factories/ProductFactory.php
+public function definition(): array
+{
+    return [
+        'kodebarang' => strtoupper(fake()->bothify('PRD-####')),
+        'namabarang' => fake()->words(3, true),
+        'harga'      => fake()->numberBetween(10000, 2500000),
+    ];
+}
+
+
+
+
+
+//database/seeders/DatabaseSeeder.php
+public function run(): void
+{
+    \App\Models\Product::factory(20)->create();
+}
+
+
+
+
+php artisan db:seed
+
