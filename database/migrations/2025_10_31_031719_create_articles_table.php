@@ -15,11 +15,14 @@ return new class extends Migration
             $table->id();
             $table->string('title');
             $table->string('slug')->unique();
-            $table->text('excerpt')->nullable()->after('slug');
+            $table->text('excerpt')->nullable();
             $table->longText('content')->nullable(); // simpan HTML dari RichEditor
             $table->enum('status', ['draft', 'published'])->default('draft');
             $table->timestamp('published_at')->nullable();
             $table->string('featured_image')->nullable();
+            $table->string('meta_title', 150)->nullable()->comment('Judul SEO artikel');
+            $table->string('meta_description', 255)->nullable()->comment('Deskripsi SEO');
+            $table->string('meta_keywords', 255)->nullable()->comment('Kata kunci SEO');
             $table->softDeletes();
             $table->timestamps();
         });
@@ -30,10 +33,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::table('articles', function (Blueprint $table) {
-            // Tambahkan baris ini untuk rollback
-            $table->dropColumn('excerpt');
-        });
-        
+        Schema::dropIfExists('articles');
     }
 };

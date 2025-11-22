@@ -12,6 +12,7 @@ class Article extends Model
     protected $fillable = [
         'title', 'slug', 'content',
         'status', 'published_at', 'featured_image',
+        'meta_title', 'meta_description', 'meta_keywords',
     ];
 
     protected $casts = [

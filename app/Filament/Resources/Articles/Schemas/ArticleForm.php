@@ -4,6 +4,7 @@ namespace App\Filament\Resources\Articles\Schemas;
 
 use Filament\Schemas\Schema as FilamentSchema;
 use Filament\Forms\Components\TextInput;
+use Filament\Forms\Components\Textarea;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\DateTimePicker;
 use Filament\Forms\Components\FileUpload;
@@ -41,6 +42,26 @@ class ArticleForm
 
             RichEditor::make('content')
                 ->label('Konten')
+                ->columnSpanFull(),
+
+            TextInput::make('meta_title')
+                ->label('Meta Title')
+                ->helperText('Judul SEO artikel (maksimal 150 karakter)')
+                ->maxLength(150)
+                ->columnSpanFull(),
+
+            Textarea::make('meta_description')
+                ->label('Meta Description')
+                ->helperText('Deskripsi SEO (maksimal 255 karakter)')
+                ->maxLength(255)
+                ->rows(3)
+                ->columnSpanFull(),
+
+            Textarea::make('meta_keywords')
+                ->label('Meta Keywords')
+                ->helperText('Kata kunci SEO, pisahkan dengan koma (maksimal 255 karakter)')
+                ->maxLength(255)
+                ->rows(2)
                 ->columnSpanFull(),
 
             Select::make('status')
